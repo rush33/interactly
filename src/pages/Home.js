@@ -1,67 +1,55 @@
-import { useState, useCallback } from "react";
-import ReactFlow, {
-  Controls,
-  Background,
-  applyNodeChanges,
-  applyEdgeChanges,
-  addEdge,
-} from "reactflow";
+import { useDispatch, useSelector } from "react-redux";
+import ReactFlow, { Controls, Background } from "reactflow";
 import "reactflow/dist/style.css";
+import TextUpdaterNode from "../components/TextUpdaterNode";
+import "../styles/text-updater-node.css";
+import ButtonEdge from "../components/ButtonEdge";
+import {
+  addNode,
+  onNodesChange,
+  onEdgesChange,
+  onConnect,
+} from "../features/flowSlice";
 
-const initialNodes = [
-  {
-    id: "1",
-    data: { label: "Hello" },
-    position: { x: 200, y: 100 },
-    type: "input",
-  },
-  {
-    id: "2",
-    data: { label: "World" },
-    position: { x: 400, y: 200 },
-  },
-];
-
-const initialEdges = [];
+const nodeTypes = {
+  textUpdater: TextUpdaterNode,
+};
+const edgeTypes = {
+  buttonedge: ButtonEdge,
+};
 
 const Home = () => {
-  const [nodes, setNodes] = useState(initialNodes);
-  const [edges, setEdges] = useState(initialEdges);
+  const dispatch = useDispatch();
+  const nodes = useSelector((state) => state.flow.nodes);
+  const edges = useSelector((state) => state.flow.edges);
 
-  const addNode = () => {
-    const lastNodePosition =
-      nodes.length > 0 ? nodes[nodes.length - 1].position : { x: 200, y: 50 };
-    const newNode = {
-      id: Date.now().toString(),
-      type: "default",
-      position: { x: lastNodePosition.x + 60, y: lastNodePosition.y + 40 },
-    };
-    setNodes([...nodes, newNode]);
+  const handleAddNode = () => {
+    dispatch(addNode());
   };
 
-  const onNodesChange = useCallback(
-    (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
-    []
-  );
-  const onEdgesChange = useCallback(
-    (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
-    []
-  );
+  const handleNodesChange = (changes) => {
+    dispatch(onNodesChange(changes));
+  };
 
-  const onConnect = useCallback(
-    (params) => setEdges((eds) => addEdge(params, eds)),
-    []
-  );
+  const handleEdgesChange = (changes) => {
+    dispatch(onEdgesChange(changes));
+  };
+
+  const handleConnect = (params) => {
+    dispatch(onConnect(params));
+  };
 
   return (
     <>
       <div style={{ position: "relative", width: "100%", height: "100%" }}>
         <ReactFlow
           nodes={nodes}
-          onNodesChange={onNodesChange}
+          nodeTypes={nodeTypes}
+          onNodesChange={handleNodesChange}
           edges={edges}
-          onEdgesChange={onEdgesChange}
-          onConnect={onConnect}
+          onEdgesChange={handleEdgesChange}
+          onConnect={handleConnect}
+          edgeTypes={edgeTypes}
         >
           <Background />
           <Controls />
@@ -83,7 +71,7 @@ const Home = () => {
             boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.3)",
             cursor: "pointer",
           }}
-          onClick={addNode}
+          onClick={handleAddNode}
         >
           Add Node
         </button>

@@ -1,0 +1,45 @@
+.text-updater-node {
+  position: "relative";
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  border: 2px solid blue;
+  padding: 2px 1px;
+  border-radius: 10px;
+  background: white;
+  width: fit-content;
+  margin: 0 auto;
+}
+.text-updater-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.text-updater-node input {
+  border: none;
+  width: 60%;
+  outline: none;
+  text-align: center;
+  color: black;
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0 auto;
+}
+.delete-button {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: red;
+  color: white;
+  position: absolute;
+  right: -10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.delete-button:hover {
+  box-shadow: 0 0 6px 2px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+}

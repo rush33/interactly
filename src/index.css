@@ -7,26 +7,3 @@ body,
   padding: 0;
   box-sizing: border-box;
 }
-.react-flow__node__wrap:hover .react-flow__node__controls,
-.react-flow__edge-path:hover .react-flow__edge__controls {
-  display: block !important;
-}
-
-.react-flow__node__controls,
-.react-flow__edge__controls {
-  position: absolute;
-  top: -10px;
-  right: -10px;
-  display: none;
-}
-
-.react-flow__node__controls svg,
-.react-flow__edge__controls svg {
-  fill: red;
-  cursor: pointer;
-}
-
-.react-flow__node__controls svg:hover,
-.react-flow__edge__controls svg:hover {
-  fill: white;
-}
